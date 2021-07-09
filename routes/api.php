@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/', [apiController::class,'api'])->name('api');
 Route::get('/get_cinema', [apiController::class, 'get_cinema'])->name('get_cinema');
+Route::get('/get_detail_cinema/{id}', [apiController::class, 'get_detail_cinema'])->name('get_detail_cinema');

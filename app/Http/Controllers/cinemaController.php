@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\cinema;
 use App\Models\ticket;
 use App\Models\movie;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+
 class cinemaController extends Controller
 {
     public function index(Request $request)
@@ -70,4 +75,40 @@ class cinemaController extends Controller
     }
 
 
+    public function get_ticket(Request $request)
+    {
+
+       foreach ($request->seat as $key => $val) {
+        $token = join('',explode('-',Carbon::today()->toDateString())).Hash::make(Auth::id()).join('',explode(':',Carbon::now()->toTimeString())).Hash::make($val);
+        ticket::create([
+            'user_id'=>Auth::id(),
+            'seat'=>$val,
+            'ticket_token'=> $token,
+            'date'=>$request->date, 
+            'name'=>$request->name,
+            'room'=>$request->room,
+            'has_pay'=>1,
+            'movie_id'=>$request->movie_id
+            
+        ]);
+    
+    
+    
+    }
+
+   return response()->json(['message'=>'success'], 200);
+        
+
+    }
+    public function my_ticket(Request $request)
+    {
+        $data = ticket::where(['user_id'=>Auth::id(),'has_pay'=>1])->get();
+        return view('my_ticket',['data'=>$data]);
+    }
+
+
+
+    
+
 }
+

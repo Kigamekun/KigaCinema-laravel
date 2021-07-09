@@ -17,6 +17,11 @@ class apiController extends Controller
         $cinema = movie::all();
         return response()->json(['cinema'=>$cinema], 200);
     }
+    public function get_detail_cinema(Request $request , $id)
+    {
+        $detail = movie::where('id',$id)->first();
+        return response()->json(['detail'=>$detail], 200);
+    }
 
 
 }

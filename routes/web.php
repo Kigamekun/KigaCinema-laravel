@@ -17,8 +17,10 @@ use App\Http\Controllers\cinemaController;
 
 Route::get('/', [cinemaController::class,'index']);
 Route::get('/order/{mov_id}', [cinemaController::class,'order'])->middleware('auth')->name('order');
+Route::get('/my_ticket', [cinemaController::class,'my_ticket'])->middleware('auth')->name('my_ticket');
 Route::get('/create', [cinemaController::class,'create'])->middleware('auth')->name('create');
 Route::post('/store', [cinemaController::class,'store'])->middleware('auth')->name('store');
+Route::post('/get_ticket', [cinemaController::class,'get_ticket'])->name('get_ticket');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

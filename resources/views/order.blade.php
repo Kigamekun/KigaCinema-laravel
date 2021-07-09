@@ -409,14 +409,6 @@
                             <section>
 
 
-
-
-
-
-
-
-
-
                                 <input type="hidden" id="movie" name="movie" value="{{ $data->price }}">
                                 <ul class="showcase">
                                     <li>
@@ -461,18 +453,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                             </section>
                             <h2>III. Verification</h2>
                             <section>
@@ -491,7 +471,7 @@
                                 <center>
                                     <div id="paypal-button-container"></div>
                                 </center>
-
+                                <button onclick="coba();">coba </button>
                             </section>
                             
                         </div>
@@ -689,14 +669,6 @@
                         // populateUI();
                         // updateSelectedCount();
 
-
-
-
-
-
-
-
-
                     } else if (currentIndex == 2) {
                         console.log('harganya ' + $('#total_price').val());
 
@@ -766,6 +738,7 @@
 
 
                     } else if (currentIndex == 3) {
+
                         $('#paypal-button-container').html('');
 
                         paypal.Buttons({
@@ -797,10 +770,48 @@
 
                                 return actions.order.capture().then(function(details) {
 
-                                    // This function shows a transaction success message to your buyer.
+                                    
 
-                                    alert('Transaction completed by ' + details
-                                        .payer.name.given_name);
+                                    // This function shows a transaction success message to your buyer.
+                                    var time = 0;
+                                 var list = document.querySelectorAll(".seat.selected");
+                                var seat_array = [...list];
+                                var solve_array = []; // converts NodeList to Array
+                                seat_array.forEach(src => {
+                                if (time != 0) {
+                                    solve_array.push(src.getAttribute('data-value'));
+
+                                }else {
+                                    time += 1;
+                                }
+
+                        });
+
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "/get_ticket",
+                            method: 'POST',
+                            data: {
+                                name: $('#name').val(),
+                                date: $('#date').val(),
+                                seat : solve_array,
+                                room: $('input[name="room"]:radio:checked').val(),
+                                has_pay: 1,
+                                movie_id:@json($data->id),
+                                 
+                            },
+                            success: function(result) {
+                                alert('beres');
+                               
+
+                            }
+                        });
+
+                                
 
                                 });
 
@@ -874,6 +885,52 @@
             $(event.currentTarget).find('[role="menu"] li:not(.disabled) a').addClass('');
         }
     </script>
+
+
+{{-- <script>
+    function coba() {
+           // This function shows a transaction success message to your buyer.
+           var time = 0;
+                                 var list = document.querySelectorAll(".seat.selected");
+                                var seat_array = [...list];
+                                var solve_array = []; // converts NodeList to Array
+                                seat_array.forEach(src => {
+                                if (time != 0) {
+                                    solve_array.push(src.getAttribute('data-value'));
+
+                                }else {
+                                    time += 1;
+                                }
+
+                        });
+
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "/get_ticket",
+                            method: 'POST',
+                            data: {
+                                name: $('#name').val(),
+                                date: $('#date').val(),
+                                seat : solve_array,
+                                room: $('input[name="room"]:radio:checked').val(),
+                                has_pay: 1,
+                                movie_id:@json($data->id)
+                                 
+                            },
+                            success: function(result) {
+                                alert('beres');
+                               
+
+                            }
+                        });
+
+                                
+    } 
+</script>--}}
 
 
 </body>
