@@ -432,7 +432,7 @@
                                         <div style="justify-content: center" class="row">
 
                                             @for ($j = 0; $j < 8; $j++)
-                                                <div data-value="{{ $j + 1 }}{{ chr($i + 65) }}"
+                                                <div title="{{ $j + 1 }}{{ chr($i + 65) }}" data-value="{{ $j + 1 }}{{ chr($i + 65) }}"
                                                     class="seat">
                                                 </div>
 
@@ -471,7 +471,7 @@
                                 <center>
                                     <div id="paypal-button-container"></div>
                                 </center>
-                                <button onclick="coba();">coba </button>
+                              
                             </section>
                             
                         </div>
@@ -497,6 +497,7 @@
     <script src="{{ url('vendor/jquery.steps.js') }}"></script>
     <!-- JQuery Steps Plugin Js -->
     <script src="{{ url('vendor/mainscripts.bundle.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- <script src="{{ url('vendor/form-wizard.js')}}"></script> --}}
     <script>
         var title = @json($data->title);
@@ -545,6 +546,7 @@
                             method: 'POST',
                             data: {
                                 date: $('#date').val(),
+                                movie_id: @json($data->id),
                                 room: $('input[name="room"]:radio:checked').val()
                             },
                             success: function(result) {
@@ -805,7 +807,10 @@
                                  
                             },
                             success: function(result) {
-                                alert('beres');
+                                swal("Success!", "You're payment has success check your ticket!", "success");
+                                
+
+
                                
 
                             }

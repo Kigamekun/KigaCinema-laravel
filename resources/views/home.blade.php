@@ -54,6 +54,74 @@
 }
 
 </style>
+<header class="text-white md:flex md:items-center md:justify-between p-4 pb-0 shadow-lg md:pb-4 ">
+  
+  <!-- Logo text or image -->
+  <div class="flex items-center justify-between mb-4 md:mb-0">
+    <h1 class="leading-none text-2xl text-grey-darkest">
+      <a class="no-underline text-grey-darkest hover:text-purple-700" href="#">
+        <b>Kiga-Cinema</b>
+      </a>
+    </h1>
+
+    <a class="text-black hover:text-orange md:hidden" href="#">
+      <i class="fa fa-2x fa-bars"></i>
+    </a>
+  </div>
+  <!-- END Logo text or image -->
+  
+  <!-- Search field -->
+  <form class="mb-4 w-full md:mb-0 md:w-1/4">
+    <label class="hidden" for="search-form">Search</label>
+    <input class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full" placeholder="Search" type="text">
+    <button class="hidden">Submit</button>
+  </form>
+  <!-- END Search field -->
+  
+  <!-- Global navigation -->
+  <nav>
+    <ul class="list-reset md:flex md:items-center">
+      @if (Auth::guest())
+      <li class="md:ml-4">
+        <a class="block no-underline hover:bold py-2 text-grey-darkest hover:text-purple-700 md:border-none md:p-0" href="{{ route('login') }}">
+          Login
+        </a>
+      </li>
+      <li class="md:ml-4">
+        <a class="border-t block no-underline hover:bold py-2 text-grey-darkest hover:text-purple-700 md:border-none md:p-0" href="{{ route('register') }}">
+          Register
+        </a>
+      </li>
+@else
+    
+    <li class="md:ml-4">
+      <a class="block no-underline hover:bold py-2 text-grey-darkest hover:text-purple-700 md:border-none md:p-0" href="#">
+        {{ Auth::user()->name }}
+      </a>
+    </li>
+    <li class="md:ml-4">
+      <a class="block no-underline hover:bold py-2 text-grey-darkest hover:text-purple-700 md:border-none md:p-0" href="{{ route('my_ticket') }}">
+      My Tick
+      </a>
+    </li>
+    <li class="md:ml-4">
+      <form method="POST" action="{{ route('logout') }}">
+      @csrf
+      <a onclick="event.preventDefault();
+      this.closest('form').submit();" class="border-t block no-underline hover:bold py-2 text-grey-darkest hover:text-purple-700 md:border-none md:p-0" href="{{ route('logout') }}">
+        Logout
+      </a>
+      
+      </form>
+    </li>
+@endif
+      
+      
+    </ul>
+  </nav>
+  <!-- END Global navigation -->
+
+</header>
 {{-- <div style="height:100vh;background: url('{{ url('/res/4296216.jpg') }}') no-repeat center center fixed ; -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;

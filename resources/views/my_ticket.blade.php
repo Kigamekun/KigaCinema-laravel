@@ -50,9 +50,12 @@
                             <td class="py-3 px-6 text-center">
                                @if ($item->date > date("Y-m-d"))
                                <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Available</span>
+                               @elseif($item->date == date("Y-m-d"))
+                               <span class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">Warning This Day!</span>
                                @else
-                               <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Expired</span
+                               <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Expired</span>
                                @endif
+                           
                             </td>
                         </tr>
                         @endforeach

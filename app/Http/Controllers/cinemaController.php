@@ -27,7 +27,7 @@ class cinemaController extends Controller
 
     public function check_cinema(Request $request)
     {
-        $ticket = ticket::where(['date'=>$request->date,'room'=>$request->room])->get();
+        $ticket = ticket::where(['date'=>$request->date,'room'=>$request->room,'movie_id'=>$request->movie_id])->get();
         $solve = [];
         foreach ($ticket as $key => $value) {
             $solve[] = $value->seat;

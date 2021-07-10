@@ -22,9 +22,7 @@ Route::get('/create', [cinemaController::class,'create'])->middleware('auth')->n
 Route::post('/store', [cinemaController::class,'store'])->middleware('auth')->name('store');
 Route::post('/get_ticket', [cinemaController::class,'get_ticket'])->name('get_ticket');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth','verified'])->name('dashboard');
+Route::get('/dashboard',[cinemaController::class,'index'])->middleware(['auth','verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
