@@ -73,7 +73,7 @@
   <!-- Search field -->
   <form class="mb-4 w-full md:mb-0 md:w-1/4">
     <label class="hidden" for="search-form">Search</label>
-    <input class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full" placeholder="Search" type="text">
+    <input style="color: black" class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full" placeholder="Search" type="text">
     <button class="hidden">Submit</button>
   </form>
   <!-- END Search field -->
@@ -197,9 +197,14 @@ background-size: cover;">
                 <div class="">
                   <div class="relative h-62 w-full mb-3">
                     <div class="absolute flex flex-col top-0 right-0 p-3">
-                      <button class="transition ease-in duration-300 bg-gray-800  hover:text-purple-500 shadow hover:shadow-md text-gray-500 rounded-full w-8 h-8 text-center p-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg></button>
+                      <button data-movie="{{ $item->id }}" class="bookmark transition ease-in duration-300 bg-gray-800  hover:text-purple-500 shadow hover:shadow-md text-gray-500 rounded-full w-8 h-8 text-center p-1">
+                      @if (App\Models\Bookmark::where(['user_id'=>Auth::id(),'movie_id'=>$item->id])->exists())
+                      <i class="fas fa-heart"></i>
+                      @else
+                      <i class="far fa-heart"></i>
+                      @endif
+                      
+                      </button>
                     </div>
                     <img src="{{ url('/thumb_mov'.'/'.$item->thumb) }}" alt="Just a flower" class=" w-full   object-fill  rounded-2xl">
                   </div>
@@ -255,5 +260,50 @@ background-size: cover;">
 
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  $(document).on('click','.bookmark',function () {
+    var data = $(this).find( "i" );
+    $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: "/add_bookmark",
+                            method: 'POST',
+                            data: {
+                                
+                                movie_id: $(this).attr('data-movie'),
+                                 
+                            },
+                            success: function(result) {
+                              // console.log(data.attr('class'));
+                               if (result.act == "add") {
+                                data.removeClass('far fa-heart').addClass('fas fa-heart');
+                                 
+                               }else {
+                                data.removeClass('fas fa-heart').addClass('far fa-heart');
+                                
+                               }
+
+
+Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Your act has been saved',
+  showConfirmButton: false,
+  timer: 1000
+})
+                               
+
+                            }
+                        });
+    // alert($(this).find( "i" ).attr('class'));
+    // $(this).find( "i" ).removeClass('far fa-heart').addClass('fas fa-heart');
+  });
+
+</script>
 
 @endsection

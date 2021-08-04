@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\cinema;
 use App\Models\ticket;
 use App\Models\movie;
+use App\Models\Bookmark;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -32,11 +33,6 @@ class cinemaController extends Controller
         foreach ($ticket as $key => $value) {
             $solve[] = $value->seat;
         }
-
-        
-
-
-
         return response()->json($solve, 200);
     }
 
@@ -70,11 +66,7 @@ class cinemaController extends Controller
             'thumb'=>$thumbname
         ]);
         return redirect()->back()->with('messeage','movie success created !');
-
-
     }
-
-
     public function get_ticket(Request $request)
     {
 
@@ -104,6 +96,26 @@ class cinemaController extends Controller
     {
         $data = ticket::where(['user_id'=>Auth::id(),'has_pay'=>1])->get();
         return view('my_ticket',['data'=>$data]);
+    }
+
+    public function add_bookmark(Request $request)
+    {
+        if (Bookmark::where(['user_id'=>Auth::id(),'movie_id'=>$request->movie_id])->exists()) {
+            $act = "remove";
+            Bookmark::where(['user_id'=>Auth::id(),'movie_id'=>$request->movie_id])->delete();
+        }else {
+            $act = "add";
+            Bookmark::create([
+                'user_id'=>Auth::id(),
+                'movie_id'=>$request->movie_id
+            ]);
+        }
+        return response()->json(['message'=>'success','act'=>$act], 200);
+    }
+    public function bookmark(Request $request)
+    {
+        $film = movie::all();
+        return view('home',['film'=>$film]);
     }
 
 

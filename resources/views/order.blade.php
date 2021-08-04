@@ -26,7 +26,14 @@
         // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
     </script>
 
+
+
     <style>
+        .disabled_anchor{
+    pointer-events: none;
+    background: #e2e4e7 !important;
+}
+
         .hungry .selection {
             margin: 5px;
 
@@ -514,6 +521,7 @@
                 bodyTag: 'section',
                 transitionEffect: 'slideLeft',
                 onInit: function(event, currentIndex) {
+
                     setButtonWavesEffect(event);
                 },
                 onStepChanged: function(event, currentIndex, priorIndex) {
@@ -527,10 +535,22 @@
                 bodyTag: 'section',
                 transitionEffect: 'slideLeft',
                 onInit: function(event, currentIndex) {
+                    $('#next').addClass("disabled_anchor");
+                    setInterval(() => {
+                        // console.log($('input[name="room"]:radio:checked').val());
+                        if (!$('#name').val() == "" && $('input[name="room"]:radio:checked').val() !== null && !$('#date').val() == '')  {
+                            $('#next').removeClass("disabled_anchor");
+                           
+                        }else {
+                            $('#next').addClass("disabled_anchor");
+                        }
+
+                    }, 1000);
                     setButtonWavesEffect(event);
                 },
          
                 onStepChanged: function(event, currentIndex, priorIndex) {
+                   
                     if (currentIndex == 1) {
                         // console.log("haeee");
 

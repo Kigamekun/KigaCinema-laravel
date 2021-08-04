@@ -20,7 +20,9 @@ Route::get('/order/{mov_id}', [cinemaController::class,'order'])->middleware('au
 Route::get('/my_ticket', [cinemaController::class,'my_ticket'])->middleware('auth')->name('my_ticket');
 Route::get('/create', [cinemaController::class,'create'])->middleware('auth')->name('create');
 Route::post('/store', [cinemaController::class,'store'])->middleware('auth')->name('store');
-Route::post('/get_ticket', [cinemaController::class,'get_ticket'])->name('get_ticket');
+Route::post('/get_ticket', [cinemaController::class,'get_ticket'])->middleware('auth')->name('get_ticket');
+Route::post('/add_bookmark', [cinemaController::class,'add_bookmark'])->middleware('auth')->name('add_bookmark');
+Route::get('/bookmark', [cinemaController::class,'bookmark'])->middleware('auth')->name('bookmark');
 
 Route::get('/dashboard',[cinemaController::class,'index'])->middleware(['auth','verified'])->name('dashboard');
 

@@ -798,6 +798,7 @@ function paginationClickHandler(event)
             break;
 
         case "next":
+           
             goToNextStep(wizard, options, state);
             break;
 
@@ -821,6 +822,7 @@ function refreshPagination(wizard, options, state)
 {
     if (options.enablePagination)
     {
+        
         var finish = wizard.find(".actions a[href$='#finish']").parent(),
             next = wizard.find(".actions a[href$='#next']").parent();
 
@@ -1055,24 +1057,24 @@ function renderPagination(wizard, options, state)
     if (options.enablePagination)
     {
         var pagination = "<{0} class=\"actions {1}\"><ul role=\"menu\" aria-label=\"{2}\">{3}</ul></{0}>",
-            buttonTemplate = "<li><a href=\"#{0}\" role=\"menuitem\">{1}</a></li>",
+            buttonTemplate = "<li><a href=\"#{0}\" id=\"{2}\" role=\"menuitem\">{1}</a></li>",
             buttons = "";
 
         if (!options.forceMoveForward)
         {
-            buttons += buttonTemplate.format("previous", options.labels.previous);
+            buttons += buttonTemplate.format("previous", options.labels.previous,'previous');
         }
 
-        buttons += buttonTemplate.format("next", options.labels.next);
+        buttons += buttonTemplate.format("next", options.labels.next,'next');
 
         if (options.enableFinishButton)
         {
-            buttons += buttonTemplate.format("finish", options.labels.finish);
+            buttons += buttonTemplate.format("finish", options.labels.finish,'finish');
         }
 
         if (options.enableCancelButton)
         {
-            buttons += buttonTemplate.format("cancel", options.labels.cancel);
+            buttons += buttonTemplate.format("cancel", options.labels.cancel,'cancel');
         }
 
         wizard.append(pagination.format(options.actionContainerTag, options.clearFixCssClass,
