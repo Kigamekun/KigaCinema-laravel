@@ -396,7 +396,7 @@
                                                         class="form-control" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="date" name="date" min="2021-07-06" max="2021-07-12"
+                                                    <input type="date" name="date" 
                                                         id="date" placeholder="date *" class="form-control" required>
                                                 </div>
 
