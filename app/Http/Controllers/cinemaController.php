@@ -80,17 +80,10 @@ class cinemaController extends Controller
             'name'=>$request->name,
             'room'=>$request->room,
             'has_pay'=>1,
-            'movie_id'=>$request->movie_id
-            
+            'movie_id'=>$request->movie_id 
         ]);
-    
-    
-    
     }
-
    return response()->json(['message'=>'success'], 200);
-        
-
     }
     public function my_ticket(Request $request)
     {
@@ -115,7 +108,7 @@ class cinemaController extends Controller
     public function bookmark(Request $request)
     {
         $film = movie::all();
-        return view('home',['film'=>$film]);
+        return view('bookmark',['film'=>$film]);
     }
 
 

@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->call(function () {
-        //     ticket::aldelete();
+        //     ticket::where('id')
         // })->daily();
         // // $schedule->command('inspire')->hourly();
     }

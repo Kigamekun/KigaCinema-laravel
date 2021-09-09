@@ -29,10 +29,10 @@
 
 
     <style>
-        .disabled_anchor{
-    pointer-events: none;
-    background: #e2e4e7 !important;
-}
+        .disabled_anchor {
+            pointer-events: none;
+            background: #e2e4e7 !important;
+        }
 
         .hungry .selection {
             margin: 5px;
@@ -358,11 +358,11 @@
                 <div class="card">
 
                     <div class="body">
-                        
+
                         <div id="wizard_horizontal">
                             <h2>I.Form Data</h2>
                             <section>
-                                <div class="">
+                                <div class="___class_+?12___">
                                     <div style="display:flex;">
                                         <div style="flex:1;">
                                             <img style="max-width:100%;
@@ -396,8 +396,8 @@
                                                         class="form-control" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="date" name="date" 
-                                                        id="date" placeholder="date *" class="form-control" required>
+                                                    <input type="date" name="date" id="date" placeholder="date *"
+                                                        class="form-control" required>
                                                 </div>
 
                                                 {{-- <div class="form-group">
@@ -439,7 +439,8 @@
                                         <div style="justify-content: center" class="row">
 
                                             @for ($j = 0; $j < 8; $j++)
-                                                <div title="{{ $j + 1 }}{{ chr($i + 65) }}" data-value="{{ $j + 1 }}{{ chr($i + 65) }}"
+                                                <div title="{{ $j + 1 }}{{ chr($i + 65) }}"
+                                                    data-value="{{ $j + 1 }}{{ chr($i + 65) }}"
                                                     class="seat">
                                                 </div>
 
@@ -447,7 +448,6 @@
 
                                         </div>
                                     @endfor
-
 
                                 </div>
                                 <p class="text">
@@ -478,9 +478,9 @@
                                 <center>
                                     <div id="paypal-button-container"></div>
                                 </center>
-                              
+
                             </section>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -538,19 +538,20 @@
                     $('#next').addClass("disabled_anchor");
                     setInterval(() => {
                         // console.log($('input[name="room"]:radio:checked').val());
-                        if (!$('#name').val() == "" && $('input[name="room"]:radio:checked').val() !== null && !$('#date').val() == '')  {
+                        if (!$('#name').val() == "" && $('input[name="room"]:radio:checked')
+                            .val() !== null && !$('#date').val() == '') {
                             $('#next').removeClass("disabled_anchor");
-                           
-                        }else {
+
+                        } else {
                             $('#next').addClass("disabled_anchor");
                         }
 
                     }, 1000);
                     setButtonWavesEffect(event);
                 },
-         
+
                 onStepChanged: function(event, currentIndex, priorIndex) {
-                   
+
                     if (currentIndex == 1) {
                         // console.log("haeee");
 
@@ -698,6 +699,10 @@
 
                         var name = $('#name').val();
                         var date = $('#date').val();
+                       
+                        var dt = date.split('-');
+
+
                         var room = $('input[name="room"]:checked').val();
                         var time = 0;
                         var list = document.querySelectorAll(".seat.selected");
@@ -712,9 +717,9 @@
             <div class="item">
 <div class="item-right">
     <h2 class="num">${div.getAttribute('data-value')}</h2>
-  <p class="day">10</p>
-  <p class="day">Feb</p>
-  <p class="day">2004</p>
+  <p class="day">${dt[2]}</p>
+  <p class="day">${dt[1]}</p>
+  <p class="day">${dt[0]}</p>
   <span class="up-border"></span>
   <span class="down-border"></span>
 </div> <!-- end item-right -->
@@ -734,7 +739,7 @@
     <div class="icon">
       <i class="fa fa-map-marker"></i>
     </div>
-    <p>North,Soth, United State , Amre <br/> Party Number 16,20</p>
+    <p>Bogor</p>
   </div>
   <div class="fix"></div>
   <button class="tickets">Tickets</button>
@@ -775,8 +780,8 @@
                                         amount: {
 
                                             value: Math.round($(
-                                                '#total_price')
-                                            .val() * 0.000069)
+                                                    '#total_price')
+                                                .val() * 0.000069)
 
                                         }
 
@@ -792,51 +797,61 @@
 
                                 return actions.order.capture().then(function(details) {
 
-                                    
+
 
                                     // This function shows a transaction success message to your buyer.
                                     var time = 0;
-                                 var list = document.querySelectorAll(".seat.selected");
-                                var seat_array = [...list];
-                                var solve_array = []; // converts NodeList to Array
-                                seat_array.forEach(src => {
-                                if (time != 0) {
-                                    solve_array.push(src.getAttribute('data-value'));
+                                    var list = document.querySelectorAll(
+                                        ".seat.selected");
+                                    var seat_array = [...list];
+                                    var
+                                solve_array = []; // converts NodeList to Array
+                                    seat_array.forEach(src => {
+                                        if (time != 0) {
+                                            solve_array.push(src
+                                                .getAttribute(
+                                                    'data-value'));
 
-                                }else {
-                                    time += 1;
-                                }
+                                        } else {
+                                            time += 1;
+                                        }
 
-                        });
+                                    });
 
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            url: "/get_ticket",
-                            method: 'POST',
-                            data: {
-                                name: $('#name').val(),
-                                date: $('#date').val(),
-                                seat : solve_array,
-                                room: $('input[name="room"]:radio:checked').val(),
-                                has_pay: 1,
-                                movie_id:@json($data->id),
-                                 
-                            },
-                            success: function(result) {
-                                swal("Success!", "You're payment has success check your ticket!", "success");
-                                
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $(
+                                                'meta[name="csrf-token"]'
+                                                ).attr('content')
+                                        }
+                                    });
+                                    $.ajax({
+                                        url: "/get_ticket",
+                                        method: 'POST',
+                                        data: {
+                                            name: $('#name').val(),
+                                            date: $('#date').val(),
+                                            seat: solve_array,
+                                            room: $(
+                                                    'input[name="room"]:radio:checked')
+                                                .val(),
+                                            has_pay: 1,
+                                            movie_id: @json($data->id),
+
+                                        },
+                                        success: function(result) {
+                                            swal("Success!",
+                                                "You're payment has success check your ticket!",
+                                                "success");
 
 
-                               
 
-                            }
-                        });
 
-                                
+
+                                        }
+                                    });
+
+
 
                                 });
 
@@ -912,7 +927,7 @@
     </script>
 
 
-{{-- <script>
+    {{-- <script>
     function coba() {
            // This function shows a transaction success message to your buyer.
            var time = 0;
@@ -955,7 +970,7 @@
 
                                 
     } 
-</script>--}}
+</script> --}}
 
 
 </body>
