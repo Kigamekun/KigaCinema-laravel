@@ -334,7 +334,6 @@
                 margin: 0 20px auto
             }
         }
-
     </style>
     <div class="container-fluid">
         <div class="block-header">
@@ -367,7 +366,8 @@
                                         <div style="flex:1;">
                                             <img style="max-width:100%;
                                              max-height:100%;
-                                             " src="{{ url('/thumb_mov' . '/' . $data->thumb) }}" alt="">
+                                             "
+                                                src="{{ url('/thumb_mov' . '/' . $data->thumb) }}" alt="">
                                         </div>
                                         <div style="flex:4;padding:20px;display:flex;flex-direction: column;">
                                             <div style="flex:1;">
@@ -392,12 +392,12 @@
                                                     <h1>Metadata Tiket</h1>
                                                 </center>
                                                 <div class="form-group">
-                                                    <input id="name" type="text" name="name" placeholder="Name *"
-                                                        class="form-control" required>
+                                                    <input id="name" type="text" name="name"
+                                                        placeholder="Name *" class="form-control" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="date" name="date" id="date" placeholder="date *"
-                                                        class="form-control" required>
+                                                    <input type="date" name="date" id="date"
+                                                        placeholder="date *" class="form-control" required>
                                                 </div>
 
                                                 {{-- <div class="form-group">
@@ -443,7 +443,6 @@
                                                     data-value="{{ $j + 1 }}{{ chr($i + 65) }}"
                                                     class="seat">
                                                 </div>
-
                                             @endfor
 
                                         </div>
@@ -699,7 +698,7 @@
 
                         var name = $('#name').val();
                         var date = $('#date').val();
-                       
+
                         var dt = date.split('-');
 
 
@@ -713,7 +712,7 @@
 
 
                                 $('#contenter').append(`
-            
+
             <div class="item">
 <div class="item-right">
     <h2 class="num">${div.getAttribute('data-value')}</h2>
@@ -727,7 +726,7 @@
 <div class="item-left">
   <p class="event">${name}</p>
   <h2 class="title">${title}</h2>
-  
+
   <div class="sce">
     <div class="icon">
       <i class="fa fa-table"></i>
@@ -805,7 +804,7 @@
                                         ".seat.selected");
                                     var seat_array = [...list];
                                     var
-                                solve_array = []; // converts NodeList to Array
+                                        solve_array = []; // converts NodeList to Array
                                     seat_array.forEach(src => {
                                         if (time != 0) {
                                             solve_array.push(src
@@ -822,7 +821,7 @@
                                         headers: {
                                             'X-CSRF-TOKEN': $(
                                                 'meta[name="csrf-token"]'
-                                                ).attr('content')
+                                            ).attr('content')
                                         }
                                     });
                                     $.ajax({
@@ -833,7 +832,8 @@
                                             date: $('#date').val(),
                                             seat: solve_array,
                                             room: $(
-                                                    'input[name="room"]:radio:checked')
+                                                    'input[name="room"]:radio:checked'
+                                                    )
                                                 .val(),
                                             has_pay: 1,
                                             movie_id: @json($data->id),
@@ -959,17 +959,17 @@
                                 room: $('input[name="room"]:radio:checked').val(),
                                 has_pay: 1,
                                 movie_id:@json($data->id)
-                                 
+
                             },
                             success: function(result) {
                                 alert('beres');
-                               
+
 
                             }
                         });
 
-                                
-    } 
+
+    }
 </script> --}}
 
 

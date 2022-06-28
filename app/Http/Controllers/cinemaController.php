@@ -76,11 +76,11 @@ class cinemaController extends Controller
             'user_id'=>Auth::id(),
             'seat'=>$val,
             'ticket_token'=> $token,
-            'date'=>$request->date, 
+            'date'=>$request->date,
             'name'=>$request->name,
             'room'=>$request->room,
             'has_pay'=>1,
-            'movie_id'=>$request->movie_id 
+            'movie_id'=>$request->movie_id
         ]);
     }
    return response()->json(['message'=>'success'], 200);
@@ -107,13 +107,18 @@ class cinemaController extends Controller
     }
     public function bookmark(Request $request)
     {
-        $film = movie::all();
-        return view('bookmark',['film'=>$film]);
+        $arr = [];
+        $data = Bookmark::where('user_id',Auth::id())->get();
+        foreach ($data as $key => $value) {
+            $arr[] = $value->movie_id;
+        }
+        $film = movie::whereIn('id',$arr)->get();
+        return view('home',['film'=>$film]);
     }
 
 
 
-    
+
 
 }
 
